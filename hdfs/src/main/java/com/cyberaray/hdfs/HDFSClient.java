@@ -18,8 +18,8 @@ public class HDFSClient {
 		conf.set("dfs.ha.namenodes.ns1", "nn1,nn2");
 		conf.set("dfs.namenode.rpc-address.ns1.nn1", "k8s01:8020");
 		conf.set("dfs.namenode.rpc-address.ns1.nn2", "k8s02:8020");
+		conf.set("dfs.client.failover.proxy.provider.ns1", "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider");
 
-		
 		// 1 获取hdfs客户端对象
 //		FileSystem fs = FileSystem.get(conf);
 		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf, "flink");
@@ -41,7 +41,7 @@ public class HDFSClient {
 		// 1 获取fs对象
 		Configuration conf = new Configuration();
 		conf.set("dfs.replication", "2");
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 执行上传API
 		fs.copyFromLocalFile(new Path("e:/banzhang.txt"), new Path("/xiaohua.txt"));
@@ -56,7 +56,7 @@ public class HDFSClient {
 		
 		// 1 获取对象
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 执行下载操作
 //		fs.copyToLocalFile(new Path("/banhua.txt"), new Path("e:/banhua.txt"));
@@ -73,7 +73,7 @@ public class HDFSClient {
 		
 		// 1 获取对象
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 文件删除
 		fs.delete(new Path("/0529"), true);
@@ -88,7 +88,7 @@ public class HDFSClient {
 		
 		// 1 获取对象
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 执行更名操作
 		fs.rename(new Path("/banzhang.txt"), new Path("/yanjing.txt"));
@@ -103,7 +103,7 @@ public class HDFSClient {
 		
 		// 1 获取对象
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 查看文件详情
 		RemoteIterator<LocatedFileStatus> listFiles = fs.listFiles(new Path("/"), true);
@@ -141,7 +141,7 @@ public class HDFSClient {
 		
 		// 1 获取对象
 		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(new URI("hdfs://hadoop102:9000"), conf , "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf , "flink");
 		
 		// 2 判断操作
 		FileStatus[] listStatus = fs.listStatus(new Path("/"));
