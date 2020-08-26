@@ -15,6 +15,7 @@
         <module>spark</module>
         <module>kafka</module>
         <module>hbase</module>
+        <module>hutool</module>
     </modules>
 
     <properties>
