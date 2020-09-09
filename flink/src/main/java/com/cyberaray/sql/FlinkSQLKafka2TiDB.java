@@ -12,6 +12,7 @@ import org.apache.flink.streaming.api.functions.ProcessFunction;
 import org.apache.flink.streaming.api.functions.source.RichParallelSourceFunction;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
 import org.apache.flink.streaming.api.scala.DataStream;
+import org.apache.flink.table.api.Table;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.types.Row;
 import org.apache.flink.util.Collector;
@@ -71,13 +72,13 @@ public class FlinkSQLKafka2TiDB {
             "'table-name' = 'user_behavior_count' " +
             ")";
 
+    public static final String TEMP_VIEW_SQL = "SELECT user_id, count(item_id) AS counts " +
+            "FROM user_behavior " +
+            "GROUP BY user_id " ;
+
     //提取读取到的数据，然后只要两个字段，重新发送到 Kafka 新 topic
-    private static final String PROCESS_SQL =
-            "INSERT INTO user_behavior_sink " +
-                    "SELECT user_id, count(item_id) AS counts " +
-                    "FROM user_behavior " +
-                    "GROUP BY user_id " ;
-                    //"ON DUPLICATE KEY UPDATE user_id=user_id";
+    private static final String PROCESS_SQL = "INSERT INTO user_behavior_sink SELECT user_id, counts FROM temp " ;
+
 
     public static void main(String[] args) throws Exception {
 
@@ -91,6 +92,13 @@ public class FlinkSQLKafka2TiDB {
 
         streamTableEnv.executeSql(TiDB_SINK_SQL);
 
+        /*--***********************处理逻辑*******************--*/
+        //创建视图
+        Table table = streamTableEnv.sqlQuery(TEMP_VIEW_SQL);
+        streamTableEnv.createTemporaryView("temp", table);
+
+        streamTableEnv.toRetractStream(table, Row.class).print();
+        //数据落地
         streamTableEnv.executeSql(PROCESS_SQL);
 
         streamTableEnv.execute("FlinkSQLKafka2TiDB");
