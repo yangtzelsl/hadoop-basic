@@ -57,8 +57,23 @@ public class FlinkSQLKafka2Mysql {
             "'table-name' = 'user_behavior_count' " +
             ")";
 
+    private static final String MYSQL_SINK_SQL_2 = "CREATE TABLE user_behavior_sink_2 (\n" +
+            "    user_id BIGINT,\n" +
+            "    counts BIGINT, \n" +
+            "    PRIMARY KEY (user_id) NOT ENFORCED\n" +
+            ") "+
+            "WITH (" +
+            "'connector' = 'jdbc', " +
+            "'url' = 'jdbc:mysql://172.16.7.60:3307/flink_test?useUnicode=true&characterEncoding=utf-8&useSSL=false', " +
+            "'username' = 'root', " +
+            "'password' = '123456', " +
+            "'table-name' = 'user_behavior_count_2' " +
+            ")";
+
     //提取读取到的数据，然后只要两个字段，重新发送到 Kafka 新 topic
     private static final String PROCESS_SQL = "insert into user_behavior_sink select user_id, count(user_id) as counts from user_behavior group by user_id";
+    private static final String PROCESS_SQL_2 = "insert into user_behavior_sink_2 select user_id, count(user_id) as counts from user_behavior group by user_id";
+
 
     public static void main(String[] args) throws Exception {
 
@@ -67,12 +82,15 @@ public class FlinkSQLKafka2Mysql {
         System.out.println(KAFKA_SOURCE_SQL);
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
         System.out.println(MYSQL_SINK_SQL);
+        System.out.println(MYSQL_SINK_SQL_2);
 
         streamTableEnv.executeSql(KAFKA_SOURCE_SQL);
 
         streamTableEnv.executeSql(MYSQL_SINK_SQL);
+        streamTableEnv.executeSql(MYSQL_SINK_SQL_2);
 
         streamTableEnv.executeSql(PROCESS_SQL);
+        streamTableEnv.executeSql(PROCESS_SQL_2);
 
         streamTableEnv.execute("FlinkSQLKafka2Mysql");
     }
