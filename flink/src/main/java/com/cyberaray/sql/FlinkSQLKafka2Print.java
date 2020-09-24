@@ -41,9 +41,9 @@ public class FlinkSQLKafka2Print {
 
     public static void main(String[] args) throws Exception {
 
-        StreamExecutionEnvironment streamEnv = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
+        //StreamExecutionEnvironment streamEnv = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(new Configuration());
         //StreamTableEnvironment streamTableEnv = EnvUtils.initStreamTableEnv();
-//        StreamExecutionEnvironment streamEnv = StreamExecutionEnvironment.getExecutionEnvironment();
+        StreamExecutionEnvironment streamEnv = StreamExecutionEnvironment.getExecutionEnvironment();
         streamEnv.setParallelism(1);
 
         EnvironmentSettings tableEnvSettings = EnvironmentSettings.newInstance()
