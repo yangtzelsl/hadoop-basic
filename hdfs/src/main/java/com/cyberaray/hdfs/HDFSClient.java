@@ -13,16 +13,16 @@ public class HDFSClient {
 	public static void main(String[] args) throws IOException, Exception, URISyntaxException {
 		
 		Configuration conf = new Configuration();
-		conf.set("fs.defaultFS", "hdfs://ns1");
-		conf.set("dfs.nameservices", "ns1");
-		conf.set("dfs.ha.namenodes.ns1", "nn1,nn2");
-		conf.set("dfs.namenode.rpc-address.ns1.nn1", "k8s01:8020");
-		conf.set("dfs.namenode.rpc-address.ns1.nn2", "k8s02:8020");
-		conf.set("dfs.client.failover.proxy.provider.ns1", "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider");
+		conf.set("fs.defaultFS", "hdfs://test-ns1");
+		conf.set("dfs.nameservices", "test-ns1");
+		conf.set("dfs.ha.namenodes.test-ns1", "nn1,nn2");
+		conf.set("dfs.namenode.rpc-address.test-ns1.nn1", "test-hdfs01:8020");
+		conf.set("dfs.namenode.rpc-address.test-ns1.nn2", "test-hdfs02:8020");
+		conf.set("dfs.client.failover.proxy.provider.test-ns1", "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider");
 
 		// 1 获取hdfs客户端对象
 //		FileSystem fs = FileSystem.get(conf);
-		FileSystem fs = FileSystem.get(new URI("hdfs://ns1"), conf, "flink");
+		FileSystem fs = FileSystem.get(new URI("hdfs://test-ns1"), conf, "flink");
 		
 		
 		// 2 在hdfs上创建路径
