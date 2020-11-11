@@ -16,7 +16,8 @@ public class CustomConsumer {
 		// 定义kakfa 服务的地址，不需要将所有broker指定上 
 //		props.put("bootstrap.servers", "linux01:9092");
 //		props.put("bootstrap.servers", "localhost:9092");
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.7.52:9092");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.7.116:9092");
+//		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.7.63:9092, 172.16.7.64:9092,172.16.7.65:9092");
 		// 制定consumer group
 		props.put("group.id", "g1");
 		// 是否自动确认offset 
@@ -38,14 +39,16 @@ public class CustomConsumer {
 		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 		
 		// 消费者订阅的topic, 可同时订阅多个 
-		consumer.subscribe(Arrays.asList("news"));
+		consumer.subscribe(Arrays.asList("lihkg"));
 
 		while (true) {
 			// 读取数据，读取超时时间为100ms 
 			ConsumerRecords<String, String> records = consumer.poll(100);
 			
-			for (ConsumerRecord<String, String> record : records)
-				System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+			for (ConsumerRecord<String, String> record : records) {
+//				System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
+				System.out.println(record.value());
+			}
 		}
 	}
 }

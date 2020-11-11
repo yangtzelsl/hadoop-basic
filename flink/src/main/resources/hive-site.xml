@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+
+    <!-- Hive Configuration can either be stored in this file or in the hadoop configuration files  -->
+    <!-- that are implied by Hadoop setup variables.                                                -->
+    <!-- Aside from Hadoop setup variables - this file is provided as a convenience so that Hive    -->
+    <!-- users do not have to edit hadoop configuration files (that may be managed as a centralized -->
+    <!-- resource).                                                                                 -->
+
+    <!-- Hive Execution Parameters -->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://172.16.7.63:3306/hive?createDatabaseIfNotExsit=true;characterEncoding=UTF-8</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.jdbc.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>hive</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>hive2020</value>
+    </property>
+
+    <!-- 不使用本地 -->
+    <property>
+        <name>hive.metastore.local</name>
+        <value>false</value>
+    </property>
+    <!-- 远端MySQL URI -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://172.16.7.63:9083</value>
+    </property>
+
+
+    <property>
+        <name>datanucleus.readOnlyDatastore</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.fixedDatastore</name>
+        <value>false</value>
+    </property>
+
+    <property>
+        <name>datanucleus.autoCreateSchema</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>datanucleus.autoCreateTables</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>datanucleus.autoCreateColumns</name>
+        <value>true</value>
+    </property>
+
+</configuration>
