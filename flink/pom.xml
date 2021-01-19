@@ -109,19 +109,20 @@
             <version>${fastjson.version}</version>
         </dependency>
 
-        <!-- 本地测试配置，将会显示flink 日志，必须放pom最后才能起效。。。神奇-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
-            <scope>provided</scope>
-        </dependency>
 
         <!-- 本地测试webui-->
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-runtime-web_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 本地测试配置，将会显示flink 日志，必须放pom最后才能起效。。。神奇-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

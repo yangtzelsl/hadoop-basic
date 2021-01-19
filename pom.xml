@@ -16,6 +16,7 @@
         <module>kafka</module>
         <module>hbase</module>
         <module>hutool</module>
+        <module>jdk</module>
     </modules>
 
     <properties>
@@ -36,6 +37,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>RELEASE</version>
+        </dependency>
+        <!-- 本地测试配置，将会显示flink 日志，必须放pom最后才能起效。。。神奇-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

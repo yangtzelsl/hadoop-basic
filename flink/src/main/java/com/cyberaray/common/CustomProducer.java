@@ -13,7 +13,7 @@ public class CustomProducer {
 	public static void main(String[] args) throws InterruptedException {
 		Properties props = new Properties();
 		// Kafka服务端的主机名和端口号
-		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.7.52:9092");
+		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.16.7.52:9092,172.16.7.53:9092,172.16.7.54:9092");
 		// 等待所有副本节点的应答
 		props.put("acks", "all");
 		// 消息发送最大尝试次数
@@ -68,9 +68,11 @@ public class CustomProducer {
 
 			out.put("data", inner);
 
-			producer.send(new ProducerRecord<String, String>("news", out.toString()));
-			Thread.sleep(3000);
+			producer.send(new ProducerRecord<String, String>("liusilin", out.toString()));
+			Thread.sleep(500);
 		}
+
+		System.out.println("数据生成完毕...");
 
 		producer.close();
 	}
