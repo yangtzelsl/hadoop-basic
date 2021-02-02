@@ -67,6 +67,7 @@ public class FlinkSQLKafka2TiDB3 {
             "    'format' = 'json'\n" +
             ")";
 
+    // default_catalog.default_database
     private static final String TiDB_SINK_SQL = "CREATE TABLE news_sink (\n" +
             "    id BIGINT,\n" +
             "    name string,\n" +
