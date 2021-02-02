@@ -17,6 +17,7 @@
         <module>hbase</module>
         <module>hutool</module>
         <module>jdk</module>
+        <module>hive</module>
     </modules>
 
     <properties>
